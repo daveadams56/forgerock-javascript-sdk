@@ -49,6 +49,7 @@ import { AccountIconComponent } from './icons/account-icon/account-icon.componen
 import { TodoIconComponent } from './icons/todo-icon/todo-icon.component';
 import { ActionIconComponent } from './icons/action-icon/action-icon.component';
 import { ChoiceComponent } from './features/journey/choice/choice.component';
+import { WebAuthnComponent } from './features/journey/webauthn/webauthn.component';
 
 @NgModule({
   declarations: [
@@ -87,6 +88,7 @@ import { ChoiceComponent } from './features/journey/choice/choice.component';
     TodoIconComponent,
     ActionIconComponent,
     ChoiceComponent,
+    WebAuthnComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

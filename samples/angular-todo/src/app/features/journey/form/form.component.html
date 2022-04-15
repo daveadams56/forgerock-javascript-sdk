@@ -154,6 +154,17 @@ of the MIT license. See the LICENSE file for details.
                 (setAnswer)="$any(callback).setAnswer($event)"
               ></app-kba>
 
+              <div *ngSwitchCase="'MetadataCallback'">
+                <!--
+                  Try WebAuthn
+                -->
+                <app-webauthn [step]="step" (updatedCallback)="nextStep($event)"></app-webauthn>
+              </div>
+
+              <div *ngSwitchCase="'HiddenValueCallback'">
+                <!-- Don't render this  -->
+              </div>
+
               <!--
                  If current callback is not supported, render a warning message
               -->

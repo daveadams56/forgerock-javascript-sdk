@@ -9,6 +9,7 @@
  */
 
 import { Component } from '@angular/core';
+import { TokenManager } from '@forgerock/javascript-sdk';
 
 /**
  * Used to show a login page
@@ -17,4 +18,11 @@ import { Component } from '@angular/core';
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent {}
+export class LoginComponent {
+  startCentralizedLogin(): void {
+    TokenManager.getTokens({
+      forceRenew: false,
+      login: 'redirect',
+    });
+  }
+}

@@ -23,6 +23,16 @@ of the MIT license. See the LICENSE file for details.
         Don’t have an account?
         <a [routerLink]="'/register'">Sign up here!</a>
       </p>
+
+      <p class="text-center">--Or--</p>
+
+      <p class="text-center">
+        Sign in with ForgeRock
+        <br />
+        <button class="btn btn-secondary w-50" (click)="startCentralizedLogin()">
+          <span>Start</span>
+        </button>
+      </p>
     </div>
   </div>
 </div>

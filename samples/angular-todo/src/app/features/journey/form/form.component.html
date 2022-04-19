@@ -169,6 +169,15 @@ of the MIT license. See the LICENSE file for details.
                 <!-- Don't render this  -->
               </div>
 
+              <div *ngSwitchCase="'DeviceProfileCallback'">
+                <app-device-profile
+                  [callback]="$any(callback)"
+                  [name]="callback?.payload?.input?.[0]?.name"
+                  (updatedCallback)="$any(callback).setProfile($event); nextStep(step)"
+                >
+                </app-device-profile>
+              </div>
+
               <!--
                  If current callback is not supported, render a warning message
               -->

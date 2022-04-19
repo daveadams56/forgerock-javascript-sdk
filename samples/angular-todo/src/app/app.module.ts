@@ -50,6 +50,7 @@ import { TodoIconComponent } from './icons/todo-icon/todo-icon.component';
 import { ActionIconComponent } from './icons/action-icon/action-icon.component';
 import { ChoiceComponent } from './features/journey/choice/choice.component';
 import { WebAuthnComponent } from './features/journey/webauthn/webauthn.component';
+import { DeviceProfileComponent } from './features/journey/device-profile/device-profile.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { WebAuthnComponent } from './features/journey/webauthn/webauthn.componen
     ActionIconComponent,
     ChoiceComponent,
     WebAuthnComponent,
+    DeviceProfileComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

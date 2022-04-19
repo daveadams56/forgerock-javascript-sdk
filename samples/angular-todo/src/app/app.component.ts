@@ -21,7 +21,6 @@ import {
   Router,
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -81,8 +80,11 @@ export class AppComponent implements OnInit {
       tree: environment.JOURNEY_LOGIN,
     });
 
-    // Check for code and state params
+    // Check for code and state params indicating this the app is returning from a centralized login flow
     this.checkForCentralizedLoginReturn();
+
+    // Check for goto param indicating this is a centralized login flow supported by this app
+    this.checkForCentralizedLoginFlow();
 
     /** *****************************************************************
      * SDK INTEGRATION POINT
@@ -123,6 +125,14 @@ export class AppComponent implements OnInit {
           // User likely not authenticated
           console.log(err);
         }
+      }
+    });
+  }
+
+  async checkForCentralizedLoginFlow() {
+    this.route.queryParams.subscribe(async (params) => {
+      if (params.goto) {
+        this.userService.goto = params.goto;
       }
     });
   }

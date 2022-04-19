@@ -131,32 +131,36 @@ export class FormComponent implements OnInit {
   async handleSuccess(success?: FRLoginSuccess) {
     this.success = success;
 
-    try {
-      /** *********************************************************************
-       * SDK INTEGRATION POINT
-       * Summary: Get OAuth/OIDC tokens with Authorization Code Flow w/PKCE.
-       * ----------------------------------------------------------------------
-       * Details: Since we have successfully authenticated the user, we can now
-       * get the OAuth2/OIDC tokens. We are passing the `forceRenew` option to
-       * ensure we get fresh tokens, regardless of existing tokens.
-       ************************************************************************* */
-      await TokenManager.getTokens({ forceRenew: true });
+    if (this.userService.goto) {
+      window.location.href = this.userService.goto;
+    } else {
+      try {
+        /** *********************************************************************
+         * SDK INTEGRATION POINT
+         * Summary: Get OAuth/OIDC tokens with Authorization Code Flow w/PKCE.
+         * ----------------------------------------------------------------------
+         * Details: Since we have successfully authenticated the user, we can now
+         * get the OAuth2/OIDC tokens. We are passing the `forceRenew` option to
+         * ensure we get fresh tokens, regardless of existing tokens.
+         ************************************************************************* */
+        await TokenManager.getTokens({ forceRenew: true });
 
-      /** *********************************************************************
-       * SDK INTEGRATION POINT
-       * Summary: Call the user info endpoint for some basic user data.
-       * ----------------------------------------------------------------------
-       * Details: This is an OAuth2 call that returns user information with a
-       * valid access token. This is optional and only used for displaying
-       * user info in the UI.
-       ********************************************************************* */
-      const info = await UserManager.getCurrentUser();
-      this.userService.info = info;
-      this.userService.isAuthenticated = true;
+        /** *********************************************************************
+         * SDK INTEGRATION POINT
+         * Summary: Call the user info endpoint for some basic user data.
+         * ----------------------------------------------------------------------
+         * Details: This is an OAuth2 call that returns user information with a
+         * valid access token. This is optional and only used for displaying
+         * user info in the UI.
+         ********************************************************************* */
+        const info = await UserManager.getCurrentUser();
+        this.userService.info = info;
+        this.userService.isAuthenticated = true;
 
-      this.router.navigateByUrl('/');
-    } catch (err) {
-      console.error(err);
+        this.router.navigateByUrl('/');
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 

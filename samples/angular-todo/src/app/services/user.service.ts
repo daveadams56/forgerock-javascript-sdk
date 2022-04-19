@@ -23,7 +23,12 @@ export class UserService {
   isAuthenticated = false;
 
   /**
-   * State repreesnting previously retrieved user information
+   * State representing previously retrieved user information
    */
   info?: any;
+
+  /**
+   * State representing the URL to go to after authentication
+   */
+  goto?: string;
 }

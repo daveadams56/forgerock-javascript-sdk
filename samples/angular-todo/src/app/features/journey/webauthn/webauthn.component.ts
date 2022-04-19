@@ -9,17 +9,10 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {
-  AttributeInputCallback,
-  NameCallback,
-  ValidatedCreateUsernameCallback,
-  FRWebAuthn,
-  FRStep,
-  WebAuthnStepType,
-} from '@forgerock/javascript-sdk';
+import { FRWebAuthn, FRStep, WebAuthnStepType } from '@forgerock/javascript-sdk';
 
 /**
- * Used to collect a username, email address or any other text
+ * Used to invoke Web Authentication on the user's browser and return the result
  */
 @Component({
   selector: 'app-webauthn',
@@ -27,25 +20,17 @@ import {
 })
 export class WebAuthnComponent implements OnInit {
   /**
-   * The callback to be represented as a username, create username, or text input field
-   */
-  @Input() callback?:
-    | NameCallback
-    | ValidatedCreateUsernameCallback
-    | AttributeInputCallback<string>;
-
-  /**
    * The name of the callback
    */
   @Input() name?: string;
 
   /**
-   * The name of the callback
+   * The FRStep representing the current step in authentication
    */
   @Input() step?: FRStep;
 
   /**
-   * Emits a string representing the text entered by the user
+   * Emits a FRStep representing the updated step after Web Authentication
    */
   @Output() updatedCallback = new EventEmitter<FRStep>();
 
@@ -75,7 +60,7 @@ export class WebAuthnComponent implements OnInit {
   }
 
   /**
-   * Emit an event to the parent component, passing the text entered
+   * Emit an event to the parent component, passing webauthn results
    * @param event - the value of the text field
    */
   updateValue(event: FRStep): void {

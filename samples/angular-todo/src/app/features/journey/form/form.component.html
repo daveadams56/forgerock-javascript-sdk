@@ -158,7 +158,11 @@ of the MIT license. See the LICENSE file for details.
                 <!--
                   Try WebAuthn
                 -->
-                <app-webauthn [step]="step" (updatedCallback)="nextStep($event)"></app-webauthn>
+                <app-webauthn
+                  [step]="step"
+                  [name]="callback?.payload?.input?.[0]?.name"
+                  (updatedCallback)="nextStep($event)"
+                ></app-webauthn>
               </div>
 
               <div *ngSwitchCase="'HiddenValueCallback'">

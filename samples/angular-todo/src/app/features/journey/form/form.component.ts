@@ -9,7 +9,7 @@
  */
 
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import {
   FRAuth,
@@ -69,7 +69,11 @@ export class FormComponent implements OnInit {
    */
   tree?: string;
 
-  constructor(private router: Router, public userService: UserService) {}
+  constructor(
+    private router: Router,
+    public userService: UserService,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.setConfigForAction(this.action);
@@ -202,5 +206,12 @@ export class FormComponent implements OnInit {
         break;
       }
     }
+
+    // Override tree if supplied in query param
+    this.route.queryParams.subscribe(async (params) => {
+      if (params.tree) {
+        this.tree = params.tree;
+      }
+    });
   }
 }

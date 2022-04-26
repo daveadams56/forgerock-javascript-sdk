@@ -51,6 +51,8 @@ import { ActionIconComponent } from './icons/action-icon/action-icon.component';
 import { ChoiceComponent } from './features/journey/choice/choice.component';
 import { WebAuthnComponent } from './features/journey/webauthn/webauthn.component';
 import { DeviceProfileComponent } from './features/journey/device-profile/device-profile.component';
+import { ConfirmationComponent } from './features/journey/confirmation/confirmation.component';
+import { TextOutputComponent } from './features/journey/text-output/text-output.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,8 @@ import { DeviceProfileComponent } from './features/journey/device-profile/device
     ChoiceComponent,
     WebAuthnComponent,
     DeviceProfileComponent,
+    ConfirmationComponent,
+    TextOutputComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

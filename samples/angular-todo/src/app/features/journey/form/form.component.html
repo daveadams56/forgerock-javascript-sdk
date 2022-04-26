@@ -133,6 +133,25 @@ of the MIT license. See the LICENSE file for details.
               ></app-choice>
 
               <!--
+                Handle a ConfirmationCallback using the Confirmation component.
+              -->
+              <app-confirmation
+                *ngSwitchCase="'ConfirmationCallback'"
+                [callback]="$any(callback)"
+                [name]="callback?.payload?.input?.[0]?.name"
+                (updatedCallback)="$any(callback).setInputValue($event); nextStep(step)"
+              ></app-confirmation>
+
+              <!--
+                Handle a TextOutputCallback using the TextOutput component.
+              -->
+              <app-text-output
+                *ngSwitchCase="'TextOutputCallback'"
+                [callback]="$any(callback)"
+                [name]="callback?.payload?.input?.[0]?.name"
+              ></app-text-output>
+
+              <!--
                 Handle a TermsAndConditionsCallback using the TermsConditions component.
               -->
               <app-terms-conditions

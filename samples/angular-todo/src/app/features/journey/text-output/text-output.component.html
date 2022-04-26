@@ -1,0 +1,22 @@
+<!--
+angular-todo-prototype
+
+terms-conditions.component.html
+
+Copyright (c) 2021 ForgeRock. All rights reserved.
+This software may be modified and distributed under the terms
+of the MIT license. See the LICENSE file for details.
+-->
+
+<container-element [ngSwitch]="messageType">
+  <div *ngSwitchCase="'INFORMATION'" class="text-center text-muted w-100">
+    <p class="alert alert-dismissible alert-secondary w-100">{{ message }}</p>
+  </div>
+  <div *ngSwitchCase="'WARNING'" class="text-center text-muted w-100">
+    <p class="alert alert-dismissible alert-warning w-100">{{ message }}</p>
+  </div>
+  <div *ngSwitchCase="'ERROR'" class="text-center text-muted w-100">
+    <p class="alert alert-dismissible alert-danger w-100">{{ message }}</p>
+  </div>
+  <div *ngSwitchCase="'SCRIPT'"></div>
+</container-element>

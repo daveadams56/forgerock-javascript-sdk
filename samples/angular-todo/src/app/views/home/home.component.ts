@@ -8,7 +8,9 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TokenManager, UserManager } from '@forgerock/javascript-sdk';
 import { UserService } from '../../services/user.service';
 
 /**
@@ -18,6 +20,45 @@ import { UserService } from '../../services/user.service';
   selector: 'app-home',
   templateUrl: './home.component.html',
 })
-export class HomeComponent {
-  constructor(public userService: UserService) {}
+export class HomeComponent implements OnInit {
+  constructor(public userService: UserService, private route: ActivatedRoute) {}
+
+  async ngOnInit(): Promise<void> {
+    // Check for code and state params indicating this the app is returning from a centralized login flow
+    this.checkForCentralizedLoginReturn();
+
+    // Check for goto param indicating this is a centralized login flow supported by this app
+    this.checkForCentralizedLoginFlow();
+  }
+
+  async checkForCentralizedLoginReturn() {
+    this.route.queryParams.subscribe(async (params) => {
+      if (params.code && params.state) {
+        await TokenManager.getTokens({
+          query: {
+            code: params.code, // Authorization code from redirect URL
+            state: params.state, // State from redirect URL
+          },
+        });
+
+        try {
+          // Assume user is likely authenticated if there are tokens
+          const info = await UserManager.getCurrentUser();
+          this.userService.isAuthenticated = true;
+          this.userService.info = info;
+        } catch (err) {
+          // User likely not authenticated
+          console.log(err);
+        }
+      }
+    });
+  }
+
+  async checkForCentralizedLoginFlow() {
+    this.route.queryParams.subscribe(async (params) => {
+      if (params.goto) {
+        this.userService.goto = params.goto;
+      }
+    });
+  }
 }

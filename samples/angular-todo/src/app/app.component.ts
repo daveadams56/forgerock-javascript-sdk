@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   title = 'angular-todo-prototype';
   loading = false;
 
-  constructor(public userService: UserService, router: Router, private route: ActivatedRoute) {
+  constructor(public userService: UserService, router: Router) {
     const navStart = router.events.pipe(
       filter((evt: any) => evt instanceof NavigationStart),
     ) as Observable<NavigationStart>;
@@ -80,12 +80,6 @@ export class AppComponent implements OnInit {
       tree: environment.JOURNEY_LOGIN,
     });
 
-    // Check for code and state params indicating this the app is returning from a centralized login flow
-    this.checkForCentralizedLoginReturn();
-
-    // Check for goto param indicating this is a centralized login flow supported by this app
-    this.checkForCentralizedLoginFlow();
-
     /** *****************************************************************
      * SDK INTEGRATION POINT
      * Summary: Optional client-side route access validation
@@ -104,36 +98,5 @@ export class AppComponent implements OnInit {
       // User likely not authenticated
       console.log(err);
     }
-  }
-
-  async checkForCentralizedLoginReturn() {
-    this.route.queryParams.subscribe(async (params) => {
-      if (params.code && params.state) {
-        await TokenManager.getTokens({
-          query: {
-            code: params.code, // Authorization code from redirect URL
-            state: params.state, // State from redirect URL
-          },
-        });
-
-        try {
-          // Assume user is likely authenticated if there are tokens
-          const info = await UserManager.getCurrentUser();
-          this.userService.isAuthenticated = true;
-          this.userService.info = info;
-        } catch (err) {
-          // User likely not authenticated
-          console.log(err);
-        }
-      }
-    });
-  }
-
-  async checkForCentralizedLoginFlow() {
-    this.route.queryParams.subscribe(async (params) => {
-      if (params.goto) {
-        this.userService.goto = params.goto;
-      }
-    });
   }
 }

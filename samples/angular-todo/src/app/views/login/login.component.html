@@ -24,13 +24,18 @@ of the MIT license. See the LICENSE file for details.
         <a [routerLink]="'/register'">Sign up here!</a>
       </p>
 
-      <p class="text-center">--Or--</p>
+      <div class="text-center">
+        <div class="row">
+          <div class="col-12">
+            <hr />
+          </div>
+        </div>
+      </div>
 
       <p class="text-center">
-        Sign in with ForgeRock
         <br />
-        <button class="btn btn-secondary w-50" (click)="startCentralizedLogin()">
-          <span>Start</span>
+        <button class="btn btn-warning w-50" (click)="startCentralizedLogin()">
+          <span>SSO with ForgeRock</span>
         </button>
       </p>
     </div>

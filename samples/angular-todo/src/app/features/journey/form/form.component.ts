@@ -12,6 +12,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import {
+  CallbackType,
   FRAuth,
   FRLoginFailure,
   FRLoginSuccess,
@@ -76,8 +77,34 @@ export class FormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.setConfigForAction(this.action);
-    this.nextStep();
+    this.route.queryParams.subscribe(async (params) => {
+      if (params.code && params.state) {
+        // TODO make sure tree is correct on resume if it has been overridden by query param
+        const resume = await FRAuth.resume(window.location.href);
+
+        if (resume) {
+          switch (resume.type) {
+            case 'LoginFailure':
+              this.failure = resume;
+              this.handleFailure(resume);
+              break;
+            case 'LoginSuccess':
+              this.success = resume;
+              this.handleSuccess(resume);
+              break;
+            case 'Step':
+              this.step = resume;
+              this.handleStep(resume);
+              break;
+            default:
+              this.handleFailure();
+          }
+        }
+      } else {
+        this.setConfigForAction(this.action);
+        this.nextStep();
+      }
+    });
   }
 
   /**
@@ -213,5 +240,13 @@ export class FormComponent implements OnInit {
         this.tree = params.tree;
       }
     });
+  }
+
+  shouldShowSubmitButton(): boolean {
+    return (
+      this.step?.getCallbacksOfType(CallbackType.SelectIdPCallback).length === 0 &&
+      this.step?.getCallbacksOfType(CallbackType.RedirectCallback).length === 0 &&
+      this.step?.getCallbacksOfType(CallbackType.ConfirmationCallback).length === 0
+    );
   }
 }

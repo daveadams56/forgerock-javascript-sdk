@@ -56,6 +56,7 @@ import { RedirectComponent } from './features/journey/redirect/redirect.componen
 import { ConfirmationComponent } from './features/journey/confirmation/confirmation.component';
 import { TextOutputComponent } from './features/journey/text-output/text-output.component';
 import { PollingWaitComponent } from './features/journey/polling-wait/polling-wait.component';
+import { HiddenValueComponent } from './features/journey/hidden-value/hidden-value.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { PollingWaitComponent } from './features/journey/polling-wait/polling-wa
     ConfirmationComponent,
     TextOutputComponent,
     PollingWaitComponent,
+    HiddenValueComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

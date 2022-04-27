@@ -184,18 +184,19 @@ of the MIT license. See the LICENSE file for details.
                 ></app-webauthn>
               </div>
 
-              <div *ngSwitchCase="'HiddenValueCallback'">
-                <!-- Don't render this  -->
-              </div>
+              <app-hidden-value
+                *ngSwitchCase="'HiddenValueCallback'"
+                [callback]="$any(callback)"
+                [name]="callback?.payload?.input?.[0]?.name"
+              ></app-hidden-value>
 
-              <div *ngSwitchCase="'DeviceProfileCallback'">
-                <app-device-profile
-                  [callback]="$any(callback)"
-                  [name]="callback?.payload?.input?.[0]?.name"
-                  (updatedCallback)="$any(callback).setProfile($event); nextStep(step)"
-                >
-                </app-device-profile>
-              </div>
+              <app-device-profile
+                *ngSwitchCase="'DeviceProfileCallback'"
+                [callback]="$any(callback)"
+                [name]="callback?.payload?.input?.[0]?.name"
+                (updatedCallback)="$any(callback).setProfile($event); nextStep(step)"
+              >
+              </app-device-profile>
 
               <app-select-idp
                 *ngSwitchCase="'SelectIdPCallback'"

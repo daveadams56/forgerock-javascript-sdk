@@ -246,7 +246,8 @@ export class FormComponent implements OnInit {
     return (
       this.step?.getCallbacksOfType(CallbackType.SelectIdPCallback).length === 0 &&
       this.step?.getCallbacksOfType(CallbackType.RedirectCallback).length === 0 &&
-      this.step?.getCallbacksOfType(CallbackType.ConfirmationCallback).length === 0
+      this.step?.getCallbacksOfType(CallbackType.ConfirmationCallback).length === 0 &&
+      this.step?.getCallbacksOfType(CallbackType.PollingWaitCallback).length === 0
     );
   }
 }

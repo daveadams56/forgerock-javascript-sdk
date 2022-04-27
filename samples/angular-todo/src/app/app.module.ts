@@ -55,6 +55,7 @@ import { SelectIDPComponent } from './features/journey/select-idp/select-idp.com
 import { RedirectComponent } from './features/journey/redirect/redirect.component';
 import { ConfirmationComponent } from './features/journey/confirmation/confirmation.component';
 import { TextOutputComponent } from './features/journey/text-output/text-output.component';
+import { PollingWaitComponent } from './features/journey/polling-wait/polling-wait.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { TextOutputComponent } from './features/journey/text-output/text-output.
     RedirectComponent,
     ConfirmationComponent,
     TextOutputComponent,
+    PollingWaitComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

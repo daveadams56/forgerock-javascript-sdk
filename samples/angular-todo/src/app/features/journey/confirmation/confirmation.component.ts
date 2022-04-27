@@ -8,7 +8,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationCallback } from '@forgerock/javascript-sdk';
 
 /**
@@ -18,7 +18,7 @@ import { ConfirmationCallback } from '@forgerock/javascript-sdk';
   selector: 'app-confirmation',
   templateUrl: './confirmation.component.html',
 })
-export class ConfirmationComponent {
+export class ConfirmationComponent implements OnInit {
   /**
    * The callback to be represented as select input
    */
@@ -33,6 +33,17 @@ export class ConfirmationComponent {
    * Emits a string representing the value of the selected choice
    */
   @Output() updatedCallback = new EventEmitter<string>();
+
+  /**
+   * The choice options
+   */
+  options: string[] = [];
+
+  ngOnInit(): void {
+    if (this.callback && this.callback?.getOptions()) {
+      this.options = this.callback.getOptions();
+    }
+  }
 
   /**
    * Emit an event to the parent component, passing the selected choice

@@ -210,6 +210,13 @@ of the MIT license. See the LICENSE file for details.
                 [name]="callback?.payload?.input?.[0]?.name"
               ></app-redirect>
 
+              <app-polling-wait
+                *ngSwitchCase="'PollingWaitCallback'"
+                [callback]="$any(callback)"
+                [name]="callback?.payload?.input?.[0]?.name"
+                (waitingFinished)="nextStep(step)"
+              ></app-polling-wait>
+
               <!--
                  If current callback is not supported, render a warning message
               -->

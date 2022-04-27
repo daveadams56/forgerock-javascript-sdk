@@ -1,11 +1,8 @@
 <div class="cstm_form-floating form-floating mb-3">
   <p class="text-center text-muted w-100">{{ callback?.getPrompt() }}</p>
   <div class="row">
-    <div class="col-6" *ngFor="let option of callback?.getOptions()">
-      <button
-        class="btn btn-secondary w-100"
-        (click)="setValue(callback?.getOptions()?.indexOf(option))"
-      >
+    <div *ngFor="let option of options" [ngClass]="{ 'col-6': options.length > 1 }">
+      <button class="btn btn-secondary w-100" (click)="setValue(options?.indexOf(option))">
         {{ option }}
       </button>
     </div>

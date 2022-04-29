@@ -173,6 +173,10 @@ of the MIT license. See the LICENSE file for details.
                 (setAnswer)="$any(callback).setAnswer($event)"
               ></app-kba>
 
+              <!--
+                Handle a MetadataCallback using the WebAuthn component.
+                This callback may contain a WebAuthn attempt.
+              -->
               <div *ngSwitchCase="'MetadataCallback'">
                 <!--
                   Try WebAuthn
@@ -184,12 +188,19 @@ of the MIT license. See the LICENSE file for details.
                 ></app-webauthn>
               </div>
 
+              <!--
+                Handle a HiddenValueCallback using the HiddenValue component.
+                This callback may contain a QR code to be rendered for MFA registration.
+              -->
               <app-hidden-value
                 *ngSwitchCase="'HiddenValueCallback'"
                 [callback]="$any(callback)"
                 [name]="callback?.payload?.input?.[0]?.name"
               ></app-hidden-value>
 
+              <!--
+                Handle a DeviceProfileCallback using the DeviceProfile component.
+              -->
               <app-device-profile
                 *ngSwitchCase="'DeviceProfileCallback'"
                 [callback]="$any(callback)"
@@ -198,6 +209,9 @@ of the MIT license. See the LICENSE file for details.
               >
               </app-device-profile>
 
+              <!--
+                Handle a SelectIDPCallback using the SelectIDP component.
+              -->
               <app-select-idp
                 *ngSwitchCase="'SelectIdPCallback'"
                 [callback]="$any(callback)"
@@ -205,12 +219,20 @@ of the MIT license. See the LICENSE file for details.
                 (updatedCallback)="$any(callback).setProvider($event); nextStep(step)"
               ></app-select-idp>
 
+              <!--
+                Handle a RedirectCallback using the Redirect component.
+                This component will redirect the user away from this page.
+              -->
               <app-redirect
                 *ngSwitchCase="'RedirectCallback'"
                 [step]="$any(step)"
                 [name]="callback?.payload?.input?.[0]?.name"
               ></app-redirect>
 
+              <!--
+                Handle a PollingWaitCallback using the PollingWait component.
+                This callback may display a spinner depending on whether a QR code is rendered elsewhere.
+              -->
               <app-polling-wait
                 *ngSwitchCase="'PollingWaitCallback'"
                 [callback]="$any(callback)"

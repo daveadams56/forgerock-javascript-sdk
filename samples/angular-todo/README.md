@@ -35,17 +35,26 @@ Once you have the 5 requirements above met, we can build the project.
 1. Login
 2. Register
 
-Note: The sample app currently supports the following callbacks only:
+Note: The sample app currently supports the following callbacks:
 
+- BooleanAttributeInputCallback
+- ChoiceCallback
+- DeviceProfileCallback
+- HiddenValueCallback (Rendering QR)
+- KbaCreateCallback
+- MetadataCallback
 - NameCallback
 - PasswordCallback
-- ChoiceCallback
+- PollingWaitCallback
+- RedirectCallback
+- SelectIDPCallback
+- StringAttributeInputCallback
+- TermsAndConditionsCallback
+- TextOutputCallback
 - ValidatedCreateUsernameCallback
 - ValidatedCreatePasswordCallback
-- StringAttributeInputCallback
-- BooleanAttributeInputCallback
-- KbaCreateCallback
-- TermsAndConditionsCallback
+
+The `Centralized Login` and `Social Login` flows are also supported.
 
 ### Configure Your `.env` Files
 

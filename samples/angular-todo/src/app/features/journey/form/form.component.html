@@ -215,6 +215,7 @@ of the MIT license. See the LICENSE file for details.
                 *ngSwitchCase="'PollingWaitCallback'"
                 [callback]="$any(callback)"
                 [name]="callback?.payload?.input?.[0]?.name"
+                [step]="step"
                 (waitingFinished)="nextStep(step)"
               ></app-polling-wait>
 

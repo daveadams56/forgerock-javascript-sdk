@@ -9,7 +9,7 @@
  */
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PollingWaitCallback } from '@forgerock/javascript-sdk';
+import { CallbackType, FRStep, PollingWaitCallback } from '@forgerock/javascript-sdk';
 
 /**
  * Used to implement a wait before polling AM for an update
@@ -25,9 +25,14 @@ export class PollingWaitComponent implements OnInit {
   @Input() name?: string;
 
   /**
-   * The FRStep representing the current step in authentication
+   * The callback representing the polling wait
    */
   @Input() callback?: PollingWaitCallback;
+
+  /**
+   * The FRStep representing the current step in authentication
+   */
+  @Input() step?: FRStep;
 
   /**
    * The message to display to the user
@@ -50,6 +55,13 @@ export class PollingWaitComponent implements OnInit {
         this.finishWaiting(true);
       }, this.callback.getWaitTime());
     }
+  }
+
+  shouldShowSpinner(): boolean {
+    return (
+      this.step?.getCallbacksOfType(CallbackType.TextOutputCallback).length === 0 ||
+      this.step?.getCallbacksOfType(CallbackType.HiddenValueCallback).length === 0
+    );
   }
 
   finishWaiting(event: any): void {

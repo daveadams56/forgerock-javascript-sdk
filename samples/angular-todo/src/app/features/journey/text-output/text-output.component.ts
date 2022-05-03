@@ -9,7 +9,7 @@
  */
 
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { TextOutputCallback } from '@forgerock/javascript-sdk';
+import { SuspendedTextOutputCallback, TextOutputCallback } from '@forgerock/javascript-sdk';
 
 /**
  * Used to display a message or script to be evaluated by the browser
@@ -22,7 +22,7 @@ export class TextOutputComponent implements OnInit {
   /**
    * The callback to be represented as terms and conditions
    */
-  @Input() callback?: TextOutputCallback;
+  @Input() callback?: TextOutputCallback | SuspendedTextOutputCallback;
 
   /**
    * The name of the callback

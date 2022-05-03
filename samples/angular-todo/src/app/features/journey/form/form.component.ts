@@ -17,6 +17,7 @@ import {
   FRLoginFailure,
   FRLoginSuccess,
   FRStep,
+  StepType,
   TokenManager,
   UserManager,
 } from '@forgerock/javascript-sdk';
@@ -81,25 +82,13 @@ export class FormComponent implements OnInit {
       if (params.code && params.state) {
         // TODO make sure tree is correct on resume if it has been overridden by query param
         const resume = await FRAuth.resume(window.location.href);
-
-        if (resume) {
-          switch (resume.type) {
-            case 'LoginFailure':
-              this.failure = resume;
-              this.handleFailure(resume);
-              break;
-            case 'LoginSuccess':
-              this.success = resume;
-              this.handleSuccess(resume);
-              break;
-            case 'Step':
-              this.step = resume;
-              this.handleStep(resume);
-              break;
-            default:
-              this.handleFailure();
-          }
-        }
+        this.processStep(resume);
+      } else if (params.suspendedId && params.authIndexType && params.authIndexValue) {
+        this.tree = params.authIndexValue;
+        const resume = await FRAuth.next(undefined, {
+          query: { suspendedId: params.suspendedId },
+        });
+        this.processStep(resume);
       } else {
         this.setConfigForAction(this.action);
         this.nextStep();
@@ -123,31 +112,34 @@ export class FormComponent implements OnInit {
        * the next step to be returned, or a success or failure.
        ********************************************************************* */
       const nextStep = await FRAuth.next(step, { tree: this.tree });
-
-      /** *******************************************************************
-       * SDK INTEGRATION POINT
-       * Summary: Handle step based on step type
-       * --------------------------------------------------------------------
-       * Details: Determine whether the step is a login failure, success or
-       * next step in the authentication journey, and handle appropriately.
-       ******************************************************************* */
-      switch (nextStep.type) {
-        case 'LoginFailure':
-          this.handleFailure(nextStep);
-          break;
-        case 'LoginSuccess':
-          this.handleSuccess(nextStep);
-          break;
-        case 'Step':
-          this.handleStep(nextStep);
-          break;
-        default:
-          this.handleFailure();
-      }
+      this.processStep(nextStep);
     } catch (err) {
       console.log(err);
     } finally {
       this.submittingForm = false;
+    }
+  }
+
+  processStep(step: FRLoginFailure | FRLoginSuccess | FRStep): void {
+    /** *******************************************************************
+     * SDK INTEGRATION POINT
+     * Summary: Handle step based on step type
+     * --------------------------------------------------------------------
+     * Details: Determine whether the step is a login failure, success or
+     * next step in the authentication journey, and handle appropriately.
+     ******************************************************************* */
+    switch (step.type) {
+      case StepType.LoginFailure:
+        this.handleFailure(step);
+        break;
+      case StepType.LoginSuccess:
+        this.handleSuccess(step);
+        break;
+      case StepType.Step:
+        this.handleStep(step);
+        break;
+      default:
+        this.handleFailure();
     }
   }
 
@@ -244,6 +236,7 @@ export class FormComponent implements OnInit {
 
   shouldShowSubmitButton(): boolean {
     return (
+      this.step?.getCallbacksOfType(CallbackType.SuspendedTextOutputCallback).length === 0 &&
       this.step?.getCallbacksOfType(CallbackType.SelectIdPCallback).length === 0 &&
       this.step?.getCallbacksOfType(CallbackType.RedirectCallback).length === 0 &&
       this.step?.getCallbacksOfType(CallbackType.ConfirmationCallback).length === 0 &&

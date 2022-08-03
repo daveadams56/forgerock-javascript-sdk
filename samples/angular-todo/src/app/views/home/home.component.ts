@@ -26,9 +26,6 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     // Check for code and state params indicating this the app is returning from a centralized login flow
     this.checkForCentralizedLoginReturn();
-
-    // Check for goto param indicating this is a centralized login flow supported by this app
-    this.checkForCentralizedLoginFlow();
   }
 
   async checkForCentralizedLoginReturn() {
@@ -50,14 +47,6 @@ export class HomeComponent implements OnInit {
           // User likely not authenticated
           console.log(err);
         }
-      }
-    });
-  }
-
-  async checkForCentralizedLoginFlow() {
-    this.route.queryParams.subscribe(async (params) => {
-      if (params.goto) {
-        this.userService.goto = params.goto;
       }
     });
   }

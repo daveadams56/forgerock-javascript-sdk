@@ -32,12 +32,12 @@ export class AppComponent implements OnInit {
 
   constructor(public userService: UserService, router: Router) {
     const navStart = router.events.pipe(
-      filter((evt: any) => evt instanceof NavigationStart),
+      filter((evt) => evt instanceof NavigationStart),
     ) as Observable<NavigationStart>;
 
     const navEnd: Observable<NavigationStart> = router.events.pipe(
       filter(
-        (evt: any) =>
+        (evt) =>
           evt instanceof NavigationEnd ||
           evt instanceof NavigationCancel ||
           evt instanceof NavigationError,
@@ -70,7 +70,7 @@ export class AppComponent implements OnInit {
 
     Config.set({
       clientId: environment.WEB_OAUTH_CLIENT,
-      redirectUri: `${window.location.origin}/callback`,
+      redirectUri: `${window.location.origin}`,
       scope: 'openid profile email',
       serverConfig: {
         baseUrl: environment.AM_URL,

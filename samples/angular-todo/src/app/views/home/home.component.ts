@@ -9,7 +9,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenManager, UserManager } from '@forgerock/javascript-sdk';
 import { UserService } from '../../services/user.service';
 
@@ -21,7 +21,11 @@ import { UserService } from '../../services/user.service';
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  constructor(public userService: UserService, private route: ActivatedRoute) {}
+  constructor(
+    public userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   async ngOnInit(): Promise<void> {
     // Check for code and state params indicating this the app is returning from a centralized login flow
@@ -48,6 +52,13 @@ export class HomeComponent implements OnInit {
           console.log(err);
         }
       }
+
+      // Remove query params now we are done with them
+      this.router.navigate([], {
+        queryParams: {
+          query: [],
+        },
+      });
     });
   }
 }

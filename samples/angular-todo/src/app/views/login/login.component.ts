@@ -8,7 +8,7 @@
  * of the MIT license. See the LICENSE file for details.
  */
 
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TokenManager } from '@forgerock/javascript-sdk';
 import { UserService } from '../../services/user.service';
@@ -20,7 +20,7 @@ import { UserService } from '../../services/user.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   constructor(public userService: UserService, private route: ActivatedRoute) {}
 
   async ngOnInit(): Promise<void> {

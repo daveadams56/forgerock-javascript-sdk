@@ -13,7 +13,8 @@ const envConfigFile = `export const environment = {
    JOURNEY_LOGIN: '${process.env.JOURNEY_LOGIN}',
    JOURNEY_REGISTER: '${process.env.JOURNEY_REGISTER}',
    API_URL: '${process.env.API_URL}',
-   production: '${process.env.NODE_ENV}'
+   production: '${process.env.NODE_ENV}',
+   CENTRALIZED_LOGIN: ${process.env.CENTRALIZED_LOGIN},
 };
 `;
 console.log(`The file ${targetPath} will be written with the following content: \n`);

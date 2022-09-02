@@ -12,6 +12,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TokenManager } from '@forgerock/javascript-sdk';
 import { UserService } from '../../services/user.service';
+import { environment } from '../../../environments/environment';
 
 /**
  * Used to show a login page
@@ -41,5 +42,9 @@ export class LoginComponent implements OnInit {
         this.userService.goto = params.goto;
       }
     });
+  }
+
+  shouldShowCentralizedLoginButton() {
+    return !this.userService.goto && environment.CENTRALIZED_LOGIN;
   }
 }

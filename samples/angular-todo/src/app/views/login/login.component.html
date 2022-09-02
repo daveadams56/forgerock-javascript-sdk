@@ -24,7 +24,7 @@ of the MIT license. See the LICENSE file for details.
         <a [routerLink]="'/register'">Sign up here!</a>
       </p>
 
-      <div *ngIf="!userService.goto">
+      <div *ngIf="shouldShowCentralizedLoginButton()">
         <div class="text-center">
           <div class="row">
             <div class="col-12">

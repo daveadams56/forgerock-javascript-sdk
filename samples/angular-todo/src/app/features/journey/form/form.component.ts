@@ -246,6 +246,10 @@ export class FormComponent implements OnInit {
   }
 
   getSocialCallback(): SelectIdPCallback | undefined {
-    return this.step?.getCallbackOfType(CallbackType.SelectIdPCallback);
+    try {
+      return this.step?.getCallbackOfType(CallbackType.SelectIdPCallback);
+    } catch (e) {
+      return undefined;
+    }
   }
 }

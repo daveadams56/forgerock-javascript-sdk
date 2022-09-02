@@ -44,12 +44,16 @@ export class WebAuthnComponent implements OnInit {
 
       let step = this.step;
 
-      if (stepType === WebAuthnStepType.Registration) {
-        // Registering a new device
-        step = await FRWebAuthn.register(step);
-      } else if (stepType === WebAuthnStepType.Authentication) {
-        // Authenticating with a registered device
-        step = await FRWebAuthn.authenticate(step);
+      try {
+        if (stepType === WebAuthnStepType.Registration) {
+          // Registering a new device
+          step = await FRWebAuthn.register(step);
+        } else if (stepType === WebAuthnStepType.Authentication) {
+          // Authenticating with a registered device
+          step = await FRWebAuthn.authenticate(step);
+        }
+      } catch (e) {
+        console.log('Error in webauthn : ' + e);
       }
 
       // `step` has now been populated with the Web Biometrics credentials

@@ -17,6 +17,7 @@ import {
   FRLoginFailure,
   FRLoginSuccess,
   FRStep,
+  SelectIdPCallback,
   StepType,
   TokenManager,
   UserManager,
@@ -242,5 +243,9 @@ export class FormComponent implements OnInit {
       this.step?.getCallbacksOfType(CallbackType.ConfirmationCallback).length === 0 &&
       this.step?.getCallbacksOfType(CallbackType.PollingWaitCallback).length === 0
     );
+  }
+
+  getSocialCallback(): SelectIdPCallback | undefined {
+    return this.step?.getCallbackOfType(CallbackType.SelectIdPCallback);
   }
 }

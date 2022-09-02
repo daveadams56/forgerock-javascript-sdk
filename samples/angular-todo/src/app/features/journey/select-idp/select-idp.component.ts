@@ -31,6 +31,11 @@ export class SelectIDPComponent {
   @Input() name?: string;
 
   /**
+   * Display only a local auth option if the callback specifies it
+   */
+  @Input() localButtonOnly?: boolean;
+
+  /**
    * Emits a string representing the value of the selected choice
    */
   @Output() updatedCallback = new EventEmitter<string>();

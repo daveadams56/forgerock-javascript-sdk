@@ -9,7 +9,6 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Config, UserManager } from '@forgerock/javascript-sdk';
 import { environment } from '../environments/environment';
 import { UserService } from './services/user.service';
 import {
@@ -20,6 +19,8 @@ import {
   Router,
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
+// @ts-ignore
+import Widget, { modal, user } from '../../package/modal';
 
 @Component({
   selector: 'app-root',
@@ -67,16 +68,21 @@ export class AppComponent implements OnInit {
      * - tree: The authentication journey/tree that you are wanting to use
      *************************************************************************** */
 
-    Config.set({
-      clientId: environment.WEB_OAUTH_CLIENT,
-      redirectUri: environment.APP_URL,
-      scope: 'openid profile email',
-      serverConfig: {
-        baseUrl: environment.AM_URL,
-        timeout: 30000, // 90000 or less
+    new Widget({
+      target: document.getElementById('login-widget-modal'), // Any existing element from static HTML file
+      props: {
+        config: {
+          clientId: environment.WEB_OAUTH_CLIENT,
+          redirectUri: environment.APP_URL,
+          scope: 'openid profile email',
+          serverConfig: {
+            baseUrl: environment.AM_URL,
+            timeout: 30000, // 90000 or less
+          },
+          realmPath: environment.REALM_PATH,
+          tree: environment.JOURNEY_LOGIN,
+        },
       },
-      realmPath: environment.REALM_PATH,
-      tree: environment.JOURNEY_LOGIN,
     });
 
     /** *****************************************************************
@@ -90,7 +96,7 @@ export class AppComponent implements OnInit {
      ***************************************************************** */
     try {
       // Assume user is likely authenticated if there are tokens
-      const info = await UserManager.getCurrentUser();
+      const info = await user.info({ remote: true });
       this.userService.isAuthenticated = true;
       this.userService.info = info;
     } catch (err) {

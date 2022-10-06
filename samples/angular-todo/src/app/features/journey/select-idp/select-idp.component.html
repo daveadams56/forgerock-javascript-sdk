@@ -2,15 +2,17 @@
   <fieldset>
     <div *ngIf="!localButtonOnly">
       <button
-              class="btn btn-secondary w-100"
-              type="button"
-              *ngFor="let provider of socialProviders()"
-              v-bind:key="provider.provider"
-              (click)="setValue(provider.provider)">
+        class="btn btn-secondary w-100"
+        type="button"
+        *ngFor="let provider of socialProviders()"
+        v-bind:key="provider.provider"
+        (click)="setValue(provider.provider)"
+      >
         <img
-             *ngIf="provider.uiConfig.buttonImage"
-             [src]="socialImageUrlFromTenant(provider.uiConfig.buttonImage)"
-             style="max-width: 21px; margin-right: 5px" />
+          *ngIf="provider.uiConfig.buttonImage"
+          [src]="socialImageUrlFromTenant(provider.uiConfig.buttonImage)"
+          style="max-width: 21px; margin-right: 5px"
+        />
         <span class="ml-1"> Continue with {{ provider.uiConfig?.buttonDisplayName }} </span>
       </button>
       <div class="text-center">
@@ -28,11 +30,12 @@
 
     <div *ngIf="localButtonOnly">
       <button
-              class="btn btn-primary w-100"
-              type="button"
-              *ngFor="let provider of localProviders()"
-              v-bind:key="provider.provider"
-              (click)="setValue(provider.provider)">
+        class="btn btn-primary w-100"
+        type="button"
+        *ngFor="let provider of localProviders()"
+        v-bind:key="provider.provider"
+        (click)="setValue(provider.provider)"
+      >
         <span class="ml-1" *ngIf="provider.provider === 'localAuthentication'">
           Enter my Credentials
         </span>

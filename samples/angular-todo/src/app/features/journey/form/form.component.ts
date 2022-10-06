@@ -112,7 +112,7 @@ export class FormComponent implements OnInit {
        * Details: This calls the next method with the previous step, expecting
        * the next step to be returned, or a success or failure.
        ********************************************************************* */
-      const nextStep = await FRAuth.next(step, { tree: this.tree });
+      const nextStep = await FRAuth.next(step, { tree: this.tree, query: { ForceAuth: 'true' } });
       this.processStep(nextStep);
     } catch (err) {
       console.log(err);

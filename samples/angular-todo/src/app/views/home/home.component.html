@@ -22,46 +22,156 @@ of the MIT license. See the LICENSE file for details.
           <a class="cstm_verified-alert-link" [routerLink]="'/todos'"> Manage your todos here </a>
         </span>
       </p>
+      <div class="card">
+        <div class="card-header p-4">
+          <h4>
+            Your Profile
+            <button
+              class="btn btn-link"
+              [routerLink]="'/login'"
+              [queryParams]="{ tree: 'Self Service', ForceAuth: 'true' }"
+            >
+              Edit
+            </button>
+          </h4>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Given Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{ userService.info.given_name }}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Last Name</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{ userService.info.family_name }}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Email</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{ userService.info.email }}</div>
+          </div>
+          <hr />
+          <div class="row">
+            <div class="col-sm-3">
+              <h6 class="mb-0">Phone</h6>
+            </div>
+            <div class="col-sm-9 text-secondary">{{ userService.info.phone_number }}</div>
+          </div>
+          <hr />
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="card">
+        <!----><!---->
+        <div class="card-header p-4">
+          <h4>Sign-in &amp; Security</h4>
+        </div>
+        <div class="card-body border-bottom">
+          <!----><!---->
+          <div class="row">
+            <div class="col-md-5"><h5>Username</h5></div>
+            <div class="col-md-5">
+              <!---->
+              dave
+            </div>
+            <div class="text-right text-nowrap col-md-2"><!----><!----></div>
+          </div>
+        </div>
+        <!---->
+        <div class="card-body border-bottom">
+          <!----><!---->
+          <div class="row">
+            <div class="col-md-5"><h5>Passwordless Login</h5></div>
+            <div class="text-right text-nowrap col-md-2">
+              <button
+                class="btn btn-link py-0 text-right text-nowrap"
+                [routerLink]="'/login'"
+                [queryParams]="{ tree: 'Configure MFA', ForceAuth: 'true' }"
+              >
+                Configure
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body border-bottom">
+          <!----><!---->
+          <div class="row">
+            <div class="col-md-5"><h5>Usernameless Login</h5></div>
+            <div class="text-right text-nowrap col-md-2">
+              <button
+                class="btn btn-link py-0 text-right text-nowrap"
+                [routerLink]="'/login'"
+                [queryParams]="{ tree: 'Usernameless Registration', ForceAuth: 'true' }"
+              >
+                Enable
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body border-bottom">
+          <!----><!---->
+          <div class="row">
+            <div class="col-md-5"><h5>Password</h5></div>
+            <div class="text-right text-nowrap col-md-2">
+              <button
+                class="btn btn-link py-0 text-right text-nowrap"
+                [routerLink]="'/login'"
+                [queryParams]="{ tree: 'UpdatePassword', ForceAuth: 'true' }"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
+  <div *ngIf="!userService.info">
+    <div class="cstm_container container-fluid">
+      <h1 class="cstm_head-text text-center">Protect with ForgeRock; Develop with Angular</h1>
 
-  <div class="cstm_container container-fluid">
-    <h1 class="cstm_head-text text-center">Protect with ForgeRock; Develop with Angular</h1>
-
-    <p class="cstm_subhead-text fs-3 mb-4 fw-bold text-muted">
-      Learn how to develop ForgeRock protected, web apps with the
-      <a class="text-muted" href="https://angular.io/"> Angular </a>
-      framework and our
-      <a class="text-muted" href="https://github.com/ForgeRock/forgerock-javascript-sdk">
-        JavaScript SDK
-      </a>
-      .
-    </p>
-    <h2 class="fs-4 fw-normal pt-3 pb-1">About this project</h2>
-    <p>
-      The purpose of this sample web app is to demonstrate how the ForgeRock JavaScript SDK is
-      implemented within a fully-functional application using a popular framework. The source code
-      for
-      <a
-        href="https://github.com/ForgeRock/forgerock-javascript-sdk/tree/master/samples/angular-todo"
-      >
-        this project can be found on Github
-      </a>
-      and run locally for experimentation. For more on our SDKs,
-      <a href="https://sdks.forgerock.com/"> you can find our official SDK documentation here. </a>
-    </p>
-
-    <!-- 
-      Display prompts to sign in or register if the user is not authenticated
-     -->
-    <div *ngIf="!userService.info">
-      <h2 class="fs-4 fw-normal pt-3 pb-1">Getting started</h2>
-      <p>
-        To use this app,
-        <a [routerLink]="'/register'">create an account now</a>! Already have an account?
-        <a [routerLink]="'/login'">Sign in</a> to get things done!
+      <p class="cstm_subhead-text fs-3 mb-4 fw-bold text-muted">
+        Learn how to develop ForgeRock protected, web apps with the
+        <a class="text-muted" href="https://angular.io/"> Angular </a>
+        framework and our
+        <a class="text-muted" href="https://github.com/ForgeRock/forgerock-javascript-sdk">
+          JavaScript SDK
+        </a>
+        .
       </p>
+      <h2 class="fs-4 fw-normal pt-3 pb-1">About this project</h2>
+      <p>
+        The purpose of this sample web app is to demonstrate how the ForgeRock JavaScript SDK is
+        implemented within a fully-functional application using a popular framework. The source code
+        for
+        <a
+          href="https://github.com/ForgeRock/forgerock-javascript-sdk/tree/master/samples/angular-todo"
+        >
+          this project can be found on Github
+        </a>
+        and run locally for experimentation. For more on our SDKs,
+        <a href="https://sdks.forgerock.com/">
+          you can find our official SDK documentation here.
+        </a>
+      </p>
+
+      <div>
+        <h2 class="fs-4 fw-normal pt-3 pb-1">Getting started</h2>
+        <p>
+          To use this app,
+          <a [routerLink]="'/register'">create an account now</a>! Already have an account?
+          <a [routerLink]="'/login'">Sign in</a> to get things done!
+        </p>
+      </div>
     </div>
   </div>
+  <app-footer></app-footer>
 </div>
-<app-footer></app-footer>

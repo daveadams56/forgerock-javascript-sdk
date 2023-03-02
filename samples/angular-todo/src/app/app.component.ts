@@ -19,6 +19,7 @@ import {
   Router,
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
+import { configuration, user } from '@forgerock/login-widget/modal';
 
 @Component({
   selector: 'app-root',
@@ -74,11 +75,23 @@ export class AppComponent implements OnInit {
      * session checks ... Below, we are calling the userinfo endpoint to
      * ensure valid tokens before continuing, but it's optional.
      ***************************************************************** */
+
+    configuration.set({
+      clientId: environment.WEB_OAUTH_CLIENT,
+      redirectUri: environment.APP_URL,
+      scope: 'openid profile email',
+      serverConfig: {
+        baseUrl: environment.AM_URL,
+        timeout: 30000, // 90000 or less
+      },
+      realmPath: environment.REALM_PATH,
+    });
+
     try {
       // Assume user is likely authenticated if there are tokens
-      //const info = await user.info({ remote: true });
+      const info = await user.info(true);
       this.userService.isAuthenticated = false;
-      //this.userService.info = info;
+      this.userService.info = info;
     } catch (err) {
       // User likely not authenticated
       console.log(err);

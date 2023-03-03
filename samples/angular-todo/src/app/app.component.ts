@@ -19,7 +19,7 @@ import {
   Router,
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
-import { configuration, user } from '@forgerock/login-widget/modal';
+import { configuration, user } from '../../package/modal';
 
 @Component({
   selector: 'app-root',
@@ -76,25 +76,35 @@ export class AppComponent implements OnInit {
      * ensure valid tokens before continuing, but it's optional.
      ***************************************************************** */
 
-    configuration.set({
-      clientId: environment.WEB_OAUTH_CLIENT,
-      redirectUri: environment.APP_URL,
-      scope: 'openid profile email',
-      serverConfig: {
-        baseUrl: environment.AM_URL,
-        timeout: 30000, // 90000 or less
+    configuration().set({
+      config: {
+        clientId: environment.WEB_OAUTH_CLIENT,
+        redirectUri: environment.APP_URL,
+        scope: 'openid profile email',
+        serverConfig: {
+          baseUrl: environment.AM_URL,
+          timeout: 30000, // 90000 or less
+        },
+        realmPath: environment.REALM_PATH,
       },
-      realmPath: environment.REALM_PATH,
     });
 
-    try {
-      // Assume user is likely authenticated if there are tokens
-      const info = await user.info(true);
-      this.userService.isAuthenticated = false;
-      this.userService.info = info;
-    } catch (err) {
-      // User likely not authenticated
-      console.log(err);
-    }
+    const userEvents = user.info();
+    userEvents.get();
+    userEvents.subscribe((event) => {
+      console.log(event);
+      this.userService.isAuthenticated = true;
+      this.userService.info = event?.response;
+    });
+
+    // try {
+    //   // Assume user is likely authenticated if there are tokens
+    //   const info = await user.info();
+    //   this.userService.isAuthenticated = false;
+    //   this.userService.info = info;
+    // } catch (err) {
+    //   // User likely not authenticated
+    //   console.log(err);
+    // }
   }
 }

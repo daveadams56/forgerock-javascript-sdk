@@ -43,6 +43,10 @@ export class RegisterComponent implements OnInit {
         links: {
           termsAndConditions: 'https://www.forgerock.com/terms',
         },
+        style: {
+          checksAndRadios: 'animated', // OPTIONAL; choices are 'animated' or 'standard'
+          labels: 'floating', // OPTIONAL; choices are 'floating' or 'stacked',
+        },
       },
     });
 

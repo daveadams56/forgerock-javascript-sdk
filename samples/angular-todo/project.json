@@ -21,7 +21,7 @@
         "polyfills": "samples/angular-todo/src/polyfills.ts",
         "tsConfig": "samples/angular-todo/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["samples/angular-todo/src/favicon.ico", "samples/angular-todo/src/assets"],
+        "assets": ["samples/angular-todo/src/favicon.ico", "samples/angular-todo/src/widget.css"],
         "styles": ["samples/angular-todo/src/styles.scss"],
         "scripts": []
       },
@@ -64,13 +64,13 @@
       "defaultConfiguration": "development"
     },
     "serve": {
-      "executor": "@nrwl/angular:webpack-server",
+      "executor": "@nrwl/angular:webpack-dev-server",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "open": true,
-        "ssl": true,
         "watch": true,
-        "port": 8443,
         "host": "angular.example.com",
+        "port": 8443,
+        "ssl": true,
         "browserTarget": "angular-todo:build:development"
       },
       "configurations": {

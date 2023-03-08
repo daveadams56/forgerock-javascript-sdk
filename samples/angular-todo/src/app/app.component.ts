@@ -9,7 +9,6 @@
  */
 
 import { Component, OnInit } from '@angular/core';
-import { Config, UserManager } from '@forgerock/javascript-sdk';
 import { environment } from '../environments/environment';
 import { UserService } from './services/user.service';
 import {
@@ -20,6 +19,7 @@ import {
   Router,
 } from '@angular/router';
 import { filter, Observable } from 'rxjs';
+import { configuration, user } from '@forgerock/login-widget';
 
 @Component({
   selector: 'app-root',
@@ -67,16 +67,17 @@ export class AppComponent implements OnInit {
      * - tree: The authentication journey/tree to use, such as `sdkAuthenticationTree`
      *************************************************************************** */
 
-    Config.set({
-      clientId: environment.WEB_OAUTH_CLIENT,
-      redirectUri: `${window.location.origin}/callback`,
-      scope: 'openid profile email',
-      serverConfig: {
-        baseUrl: environment.AM_URL,
-        timeout: 30000, // 90000 or less
+    configuration().set({
+      config: {
+        clientId: environment.WEB_OAUTH_CLIENT,
+        redirectUri: window.location.origin,
+        scope: 'openid profile email',
+        serverConfig: {
+          baseUrl: environment.AM_URL,
+          timeout: 30000, // 90000 or less
+        },
+        realmPath: environment.REALM_PATH,
       },
-      realmPath: environment.REALM_PATH,
-      tree: environment.JOURNEY_LOGIN,
     });
 
     /** *****************************************************************
@@ -88,14 +89,12 @@ export class AppComponent implements OnInit {
      * session checks ... Below, we are calling the userinfo endpoint to
      * ensure valid tokens before continuing, but it's optional.
      ***************************************************************** */
-    try {
-      // Assume user is likely authenticated if there are tokens
-      const info = await UserManager.getCurrentUser();
+    const userEvents = user.info();
+    userEvents.get();
+    userEvents.subscribe((event) => {
+      console.log(event);
       this.userService.isAuthenticated = true;
-      this.userService.info = info;
-    } catch (err) {
-      // User likely not authenticated
-      console.log(err);
-    }
+      this.userService.info = event?.response;
+    });
   }
 }

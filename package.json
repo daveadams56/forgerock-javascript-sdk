@@ -101,5 +101,8 @@
     "packages/*",
     "samples/*",
     "lib/*"
-  ]
+  ],
+  "dependencies": {
+    "@forgerock/login-widget": "^1.0.0-beta.7"
+  }
 }

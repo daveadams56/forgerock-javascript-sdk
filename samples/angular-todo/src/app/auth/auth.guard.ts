@@ -17,7 +17,8 @@ import {
   Router,
 } from '@angular/router';
 import { UserService } from '../services/user.service';
-import { Tokens, TokenStorage, UserManager } from '@forgerock/javascript-sdk';
+import { configuration, user } from '@forgerock/login-widget';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -36,24 +37,35 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Promise<true | UrlTree> {
-    const loginUrl = this.router.parseUrl('/login');
+    const loginUrl = this.router.parseUrl('/home?login=true');
+
+    configuration().set({
+      config: {
+        clientId: environment.WEB_OAUTH_CLIENT,
+        redirectUri: window.location.origin,
+        scope: 'openid profile email',
+        serverConfig: {
+          baseUrl: environment.AM_URL,
+          timeout: 30000, // 90000 or less
+        },
+        realmPath: environment.REALM_PATH,
+      },
+    });
     try {
       // Assume user is likely authenticated if there are tokens
-
-      /** *****************************************************************
-       * SDK INTEGRATION POINT
-       * Summary: Optional client-side route access validation
-       * ------------------------------------------------------------------
-       * Details: Here, we make sure tokens exist using TokenStorage.get()
-       * however there are other checks – validate tokens, session checks..
-       * In this case, we are calling the userinfo endpoint to
-       * ensure valid tokens before continuing, but it's optional.
-       ***************************************************************** */
-      const tokens: Tokens = await TokenStorage.get();
-      const info = await UserManager.getCurrentUser();
-      if (tokens === undefined || info === undefined) {
+      const userEvents: any = user.tokens();
+      // const userResult = await userEvents.get();
+      const userResult = await userEvents.get();
+      console.log('userResult');
+      console.log(userResult);
+      if (userResult.completed && userResult.successful) {
+        console.log(userResult);
+        this.userService.isAuthenticated = true;
+        return true;
+      } else {
         return loginUrl;
       }
+
       return true;
     } catch (err) {
       // User likely not authenticated

@@ -193,7 +193,7 @@ abstract class HttpClient {
     let headers = new Headers(init.headers || {});
 
     if (options.authorization) {
-      headers.set('X-ForgeRock-SDK', 'true');
+      headers.set('X-AUTHENTICATE-RESPONSE', 'HEADER');
     }
 
     if (!options.bypassAuthentication) {

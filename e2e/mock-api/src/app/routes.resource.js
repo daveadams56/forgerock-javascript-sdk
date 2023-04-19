@@ -122,7 +122,12 @@ export default function (app) {
         baz.canWithdraw = false;
         res.json({ message: 'Successfully retrieved resource!' });
       } else {
-        if (req.headers['x-forgerock-sdk'] && req.headers.referer.includes('json')) {
+        console.log(req.headers['x-authenticate-response']);
+        if (
+          req.headers['x-authenticate-response'] &&
+          req.headers['x-authenticate-response'] === 'HEADER' &&
+          req.headers.referer.includes('json')
+        ) {
           res.setHeader('WWW-Authenticate', createTxnStepUpHeader(req.headers.referer));
           res.send(401, null);
         } else {

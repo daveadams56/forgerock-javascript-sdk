@@ -89,9 +89,8 @@ export const createTxnStepUpHeader = (url) => {
   // Base 64 of {"TransactionConditionAdvice":["39dfdd15-59a3-473c-a7fc-ecda3bbc3bc8"]}
   const advices =
     'eyJUcmFuc2FjdGlvbkNvbmRpdGlvbkFkdmljZSI6WyIzOWRmZGQxNS01OWEzLTQ3M2MtYTdmYy1lY2RhM2JiYzNiYzgiXX0=';
-  const format = '1';
   const realm = '/';
-  const headerValue = `ForgeRock realm="${realm}",am_uri="${amUrl}",advices="${advices}",format_hint="${format}"`;
+  const headerValue = `SSOADVICE realm="${realm}",am_uri="${amUrl}",advices="${advices}"`;
   return headerValue;
 };
 
@@ -103,9 +102,8 @@ export const createTreeStepUpHeader = (url) => {
   // Base 64 of {"AuthenticateToServiceConditionAdvice":["/sdk:ConfirmPassword"]}
   const advices =
     'eyJBdXRoZW50aWNhdGVUb1NlcnZpY2VDb25kaXRpb25BZHZpY2UiOlsiL3NkazpDb25maXJtUGFzc3dvcmQiXX0=';
-  const format = '1';
   const realm = '/';
-  const headerValue = `ForgeRock realm="${realm}",am_uri="${amUrl}",advices="${advices}",format_hint="${format}"`;
+  const headerValue = `SSOADVICE realm="${realm}",am_uri="${amUrl}",advices="${advices}"`;
   return headerValue;
 };
 

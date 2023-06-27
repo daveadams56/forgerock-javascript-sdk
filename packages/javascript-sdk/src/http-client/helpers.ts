@@ -144,11 +144,11 @@ function getXMLValueFromURL(urlString: string): string {
 export function getAdvicesFromHeader(header: string): Advices {
   const headerArr = header.split(',') || [];
   const advicesSubstr = headerArr.find((substr) => substr.includes('advices')) || '';
-  const advicesValueArray = advicesSubstr.match(/"(\S+)"/);
-  const advicesValue = advicesValueArray ? advicesValueArray[1] : '';
-  const advicesValueDecoded = atob(advicesValue);
   let advicesValueParsed: Advices;
   try {
+    const advicesValueArray = advicesSubstr.match(/"(\S+)"/);
+    const advicesValue = advicesValueArray ? advicesValueArray[1] : '';
+    const advicesValueDecoded = atob(advicesValue);
     advicesValueParsed = JSON.parse(advicesValueDecoded);
   } catch (err) {
     console.error('Could not parse advices value from WWW-Authenticate header');

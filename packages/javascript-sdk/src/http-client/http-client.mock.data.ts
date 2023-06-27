@@ -23,7 +23,7 @@ export const authzByTreeResFromIG = {
 export const authzByTreeResFromIGHeader = {
   get(name: string): string {
     const headerValue =
-      'ForgeRock realm="/",am_uri="https://auth.example.com:9443/am",advices="eyJBdXRoZW50aWNhdGVUb1NlcnZpY2VDb25kaXRpb25BZHZpY2UiOlsiL3NkazpDb25maXJtUGFzc3dvcmQiXX0=",format_hint="1"';
+      'SSOADVICE realm="/",advices="eyJBdXRoZW50aWNhdGVUb1NlcnZpY2VDb25kaXRpb25BZHZpY2UiOlsiL3NkazpDb25maXJtUGFzc3dvcmQiXX0=",am_uri="https://openam.example.com/am",';
     switch (name) {
       case 'WWW-Authenticate':
         return headerValue;
@@ -48,7 +48,7 @@ export const authzByTxnResFromIG = {
 export const authzByTxnResFromIGHeader = {
   get(name: string): string {
     const headerValue =
-      'ForgeRock realm="/",am_uri="https://auth.example.com:9443/am",advices="eyJUcmFuc2FjdGlvbkNvbmRpdGlvbkFkdmljZSI6WyIzOWRmZGQxNS01OWEzLTQ3M2MtYTdmYy1lY2RhM2JiYzNiYzgiXX0=",format_hint="1"';
+      'SSOADVICE realm="/",advices="eyJUcmFuc2FjdGlvbkNvbmRpdGlvbkFkdmljZSI6WyIzOWRmZGQxNS01OWEzLTQ3M2MtYTdmYy1lY2RhM2JiYzNiYzgiXX0=",am_uri="https://openam.example.com/am"';
     switch (name) {
       case 'WWW-Authenticate':
         return headerValue;

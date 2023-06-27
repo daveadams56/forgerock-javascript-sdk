@@ -193,7 +193,7 @@ abstract class HttpClient {
     let headers = new Headers(init.headers || {});
 
     if (options.authorization) {
-      headers.set('X-AUTHENTICATE-RESPONSE', 'HEADER');
+      headers.set('x-authenticate-response', 'header');
     }
 
     if (!options.bypassAuthentication) {

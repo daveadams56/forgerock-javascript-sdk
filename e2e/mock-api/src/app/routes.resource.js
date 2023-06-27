@@ -125,7 +125,7 @@ export default function (app) {
         console.log(req.headers['x-authenticate-response']);
         if (
           req.headers['x-authenticate-response'] &&
-          req.headers['x-authenticate-response'] === 'HEADER' &&
+          req.headers['x-authenticate-response'] === 'header' &&
           req.headers.referer.includes('json')
         ) {
           res.setHeader('WWW-Authenticate', createTxnStepUpHeader(req.headers.referer));
@@ -149,7 +149,7 @@ export default function (app) {
       } else {
         if (
           req.headers['x-authenticate-response'] &&
-          req.headers['x-authenticate-response'] === 'HEADER' &&
+          req.headers['x-authenticate-response'] === 'header' &&
           req.headers.referer.includes('json')
         ) {
           res.setHeader('WWW-Authenticate', createTreeStepUpHeader(req.headers.referer));

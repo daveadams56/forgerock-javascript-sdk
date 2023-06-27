@@ -90,7 +90,7 @@ export const createTxnStepUpHeader = (url) => {
   const advices =
     'eyJUcmFuc2FjdGlvbkNvbmRpdGlvbkFkdmljZSI6WyIzOWRmZGQxNS01OWEzLTQ3M2MtYTdmYy1lY2RhM2JiYzNiYzgiXX0=';
   const realm = '/';
-  const headerValue = `SSOADVICE realm="${realm}",am_uri="${amUrl}",advices="${advices}"`;
+  const headerValue = `SSOADVICE realm="${realm}",advices="${advices}",am_uri="${amUrl}"`;
   return headerValue;
 };
 
@@ -103,7 +103,7 @@ export const createTreeStepUpHeader = (url) => {
   const advices =
     'eyJBdXRoZW50aWNhdGVUb1NlcnZpY2VDb25kaXRpb25BZHZpY2UiOlsiL3NkazpDb25maXJtUGFzc3dvcmQiXX0=';
   const realm = '/';
-  const headerValue = `SSOADVICE realm="${realm}",am_uri="${amUrl}",advices="${advices}"`;
+  const headerValue = `SSOADVICE realm="${realm}",advices="${advices}",am_uri="${amUrl}"`;
   return headerValue;
 };
 

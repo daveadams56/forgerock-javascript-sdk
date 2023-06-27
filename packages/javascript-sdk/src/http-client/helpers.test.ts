@@ -104,7 +104,7 @@ describe('Test HttpClient utils', () => {
     const headers = new Headers();
     headers.append(
       'WWW-Authenticate',
-      `ForgeRock realm="/",am_uri="https://openam.example.com/am",advices="${advices}",format_hint="1"`,
+      `SSOADVICE realm="/",advices="${advices}",am_uri="https://openam.example.com/am"`,
     );
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = {
